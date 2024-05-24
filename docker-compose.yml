@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   wordpress:
-    image: wordpress:php8.2-fpm
+    image: wordpress:php8.3-fpm-alpine
     restart: always
     volumes: &ref_1
       - 'wordpress:/var/www/html'
