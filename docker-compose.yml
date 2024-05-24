@@ -33,7 +33,7 @@ services:
       - wpsite
 
   nginx:
-    image: nginx:latest
+    image: nginx:alpine
     ports:
       - "8080:80"
     volumes: *ref_1
