@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  wordpress:
+    image: wordpress:php8.2-fpm
+    restart: always
+    volumes: &ref_1
+      - 'wordpress:/var/www/html'
+      - >-
+        ./wp-content/plugins/my-simple-plugin:/var/www/html/wp-content/plugins/my-simple-plugin
+      - './nginx.conf:/etc/nginx/nginx.conf'
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+    depends_on:
+      - db
+    networks:
+      - wpsite
+    # user: "${UID}:${GID}"
+
+  db:
+    image: mariadb:10.5
+    volumes:
+      - db_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+    networks:
+      - wpsite
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "8080:80"
+    volumes: *ref_1
+    depends_on:
+      - wordpress
+    networks:
+      - wpsite
+
+networks:
+  wpsite:
+
+volumes:
+  db_data:
+  wordpress:
