@@ -13,22 +13,10 @@ http {
     include /etc/nginx/mime.types;
     default_type application/octet-stream;
 
-
-    server {
-            listen 80;
-            server_name localhost;
-
-            location / {
-                return 200 'Welcome to localhost';
-                add_header Content-Type text/plain;
-            }
-    }
-
-
     server {
         listen 80;
 
-        server_name demo.localhost; 
+        server_name test.localhost;
 
         root /var/www/html;
 
@@ -52,7 +40,4 @@ http {
             deny all;
         }
     }
-
-
 }
-
