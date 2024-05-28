@@ -5,14 +5,26 @@ services:
     # restart: always
     volumes: &ref_1
       - 'wordpress:/var/www/html'
+      - './wp-config.php:/var/www/html/wp-config.php'
       - >-
         ./wp-content/plugins/my-simple-plugin:/var/www/html/wp-content/plugins/my-simple-plugin
-      - './nginx.conf:/etc/nginx/nginx.conf'
     environment:
       WORDPRESS_DB_HOST: db:3306
       WORDPRESS_DB_NAME: wordpress
       WORDPRESS_DB_USER: wordpress
       WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_CONFIG_EXTRA: |
+        /* Multisite 
+        define('WP_ALLOW_MULTISITE', false );
+        define('MULTISITE', false);
+        define('SUBDOMAIN_INSTALL', false);
+        define('PATH_CURRENT_SITE', '/');
+        define('SITE_ID_CURRENT_SITE', 1);
+        define('BLOG_ID_CURRENT_SITE', 1);
+        define('DOMAIN_CURRENT_SITE', 'localhost:8090'); // TODO: change to actual domain when deploying
+        */
+        define('WP_HOME', 'https://localhost');
+        define('WP_SITEURL', 'https://localhost');
     depends_on:
       - db
     networks:
@@ -34,8 +46,10 @@ services:
   nginx:
     image: nginx:alpine
     ports:
-      - "80:80"
+      # - "8080:80"
+      - "443:443"
     volumes: *ref_1
+    entrypoint: ["/docker-entrypoint.d/init.sh"]
     depends_on:
       - wordpress
     networks:
