@@ -1,45 +1,45 @@
 version: '3.8'
 
 services:
-  # MySQL Database
-  db:
-    image: mysql:8.0
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: wordpress
-      MYSQL_USER: wordpress
-      MYSQL_PASSWORD: wordpress_password
-    volumes:
-      - db_data:/var/lib/mysql
-    networks:
-      - wordpress_network
+  # # MySQL Database
+  # db:
+  #   image: mysql:8.0
+  #   restart: always
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: rootpassword
+  #     MYSQL_DATABASE: wordpress
+  #     MYSQL_USER: wordpress
+  #     MYSQL_PASSWORD: wordpress_password
+  #   volumes:
+  #     - db_data:/var/lib/mysql
+  #   networks:
+  #     - wordpress_network
 
-  # WordPress Application
-  wordpress:
-    image: wordpress:6.4-php8.2-apache
-    restart: always
-    depends_on:
-      - db
-    environment:
-      WORDPRESS_DB_HOST: db:3306
-      WORDPRESS_DB_NAME: wordpress
-      WORDPRESS_DB_USER: wordpress
-      WORDPRESS_DB_PASSWORD: wordpress_password
-      WORDPRESS_TABLE_PREFIX: wp_
-      WORDPRESS_CONFIG_EXTRA: |
-        define('WP_CACHE', true);
-        define('VARNISH_CACHE', true);
-    # volumes:
-      # - wordpress_data:/var/www/html
-      # - ./config/php.ini:/usr/local/etc/php/conf.d/custom.ini
-    networks:
-      - wordpress_network
+  # # WordPress Application
+  # wordpress:
+  #   image: wordpress:6.4-php8.2-apache
+  #   restart: always
+  #   depends_on:
+  #     - db
+  #   environment:
+  #     WORDPRESS_DB_HOST: db:3306
+  #     WORDPRESS_DB_NAME: wordpress
+  #     WORDPRESS_DB_USER: wordpress
+  #     WORDPRESS_DB_PASSWORD: wordpress_password
+  #     WORDPRESS_TABLE_PREFIX: wp_
+  #     WORDPRESS_CONFIG_EXTRA: |
+  #       define('WP_CACHE', true);
+  #       define('VARNISH_CACHE', true);
+  #   # volumes:
+  #     # - wordpress_data:/var/www/html
+  #     # - ./config/php.ini:/usr/local/etc/php/conf.d/custom.ini
+  #   networks:
+  #     - wordpress_network
 
   # Varnish Cache
   varnish:
     image: varnish:7.3-alpine
-    restart: always
+    # restart: always
     depends_on:
       - wordpress
     environment:
@@ -55,7 +55,7 @@ services:
   # Nginx Reverse Proxy
   nginx:
     image: nginx:alpine
-    restart: always
+    # restart: always
     depends_on:
       - varnish
     ports:
