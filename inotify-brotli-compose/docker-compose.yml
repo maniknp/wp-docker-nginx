@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  brotli-watcher:
+    image: maniknp/inotify:brotli-alpine-3.21.3
+    container_name: inotify-container
+    # user: "www-data:www-data"
+    volumes:
+      - ./../wp-varnish-demo/wp:/var/www/public
+      - ./watch_and_compress.sh:/app/watch_and_compress.sh
+    # restart: unless-stopped
+    tty: true

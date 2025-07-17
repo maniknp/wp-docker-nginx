@@ -1,0 +1,21 @@
+version: '3.8'
+name: redis-stack-database
+services:
+  ###======= redis stack =======###
+  redis-database:
+    image: redis/redis-stack:latest
+    container_name: redis-database
+    ports:
+      - "6379:6379"
+      - "8001:8001" # Redis Stack UI
+    environment:
+      - REDIS_ARGS="--requirepass mypassword"
+    volumes:
+      - redis-data:/data
+    networks:
+      - binarypoint-network
+volumes:
+  redis-data:
+networks:
+  binarypoint-network:
+    external: true

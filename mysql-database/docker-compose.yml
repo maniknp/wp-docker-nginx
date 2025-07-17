@@ -22,9 +22,10 @@ services:
     image: phpmyadmin/phpmyadmin
     container_name: phpmyadmin
     environment:
-      DB_HOST: mysql
+      PMA_HOST : mysql-database
       PMA_PORT: 3306
-      MYSQL_ROOT_PASSWORD: rootpassword
+      PMA_USER: root
+      PMA_PASSWORD: rootpassword
     ports:
       - "8081:80"
     depends_on:
