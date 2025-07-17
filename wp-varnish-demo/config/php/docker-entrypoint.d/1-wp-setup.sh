@@ -1,10 +1,14 @@
 #!/bin/sh
 
+echo "====> current user is 1 $( id )   <===="
+
 # check wp cli is installed
 if ! wp --version; then
     echo "wp cli is not installed"
     exit 1
 fi
+
+ls -l /var/www/
 
 cd /var/www/public
 
