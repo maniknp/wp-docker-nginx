@@ -50,6 +50,7 @@ do
   elif [[ "$event" == *MODIFY* ]]; then
     echo "➡️  Recompressing (level 11): $fullpath"
     brotli -f -q 11 "$fullpath" && echo "✅ Recompressed: $brfile"
+    chown www-data:www-data "$brfile" && echo "✅ Ownership set to www-data: $brfile"
 
   elif [[ "$event" == *DELETE* ]]; then
     if [[ -f "$brfile" ]]; then
@@ -60,4 +61,5 @@ do
 done
 
 
+echo " ========== This Script is running in a Docker container ========== "
 # exec "$@"

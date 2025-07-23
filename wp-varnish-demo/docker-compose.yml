@@ -9,6 +9,7 @@ services:
       - ./config/php/docker-php-entrypoint.sh:/usr/local/bin/docker-php-entrypoint
       - ./config/php/docker-entrypoint.d:/docker-entrypoint.d
       - ./config/php/php.ini-dev:/usr/local/etc/php/php.ini
+      - ./config/php/opcache-preload-files/preload.php:/var/www/preload.php
       - ${WP_DEMO_ROOT}
     environment:
       - DB_HOST=mysql-database
@@ -25,7 +26,7 @@ services:
 
   nginx:
     image: maniknp/nginx:1.27.3-brotli
-    container_name: nginx-container
+    container_name: nginx-container-wp
     volumes:
       - ./config/nginx/default.conf:/etc/nginx/conf.d/default.conf
       - ./config/nginx/nginx.conf:/etc/nginx/nginx.conf:rw

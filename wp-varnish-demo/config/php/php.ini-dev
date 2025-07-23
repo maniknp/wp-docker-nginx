@@ -1918,17 +1918,17 @@ opcache.revalidate_freq=3600
 
 ; If specified, it produces opcode dumps for debugging different stages of
 ; optimizations.
-;opcache.opt_debug_level=0
+;opcache.opt_debug_level=0 
 
 ; Specifies a PHP script that is going to be compiled and executed at server
 ; start-up.
 ; https://php.net/opcache.preload
-;opcache.preload=
+opcache.preload=/var/www/preload.php
 
 ; Preloading code as root is not allowed for security reasons. This directive
 ; facilitates to let the preloading to be run as another user.
 ; https://php.net/opcache.preload_user
-;opcache.preload_user=
+opcache.preload_user=www-data
 
 ; Prevents caching files that are less than this number of seconds old. It
 ; protects from caching of incompletely updated files. In case all file updates
@@ -1937,6 +1937,10 @@ opcache.revalidate_freq=3600
 
 ; Absolute path used to store shared lockfiles (for *nix only).
 ;opcache.lockfile_path=/tmp
+
+;Amount of memory JIT uses. Must be >0 to enable JIT
+opcache.jit_buffer_size=100M
+
 
 [curl]
 ; A default value for the CURLOPT_CAINFO option. This is required to be an

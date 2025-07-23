@@ -1,0 +1,21 @@
+version: '3.8'
+name: redis-redisinsight-ui
+services:
+  ###======= redis redisinsight =======###
+  redis-redisinsight:
+    image: redis/redisinsight:latest
+    container_name: redis-redisinsight-container
+    ports:
+      - "5540:5540"
+    environment:
+      - RI_REDIS_HOST="redis"
+      - RI_REDIS_PORT="6379"
+    volumes:
+      - redisinsight:/data
+    networks:
+      - binarypoint-network
+volumes:
+  redisinsight:
+networks:
+  binarypoint-network:
+    external: true

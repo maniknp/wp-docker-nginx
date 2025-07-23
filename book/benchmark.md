@@ -3,6 +3,7 @@ ab -n 50000 -c 1000 http://wp.localhost/sample-page/
 ```
 
 ```bash
+ curl -I -H "Accept-Encoding: br" http://wp.localhost/sample-page/
 curl -s -o /dev/null -w "
     Time to connect:  %{time_connect}s
     Time to first byte: %{time_starttransfer}s

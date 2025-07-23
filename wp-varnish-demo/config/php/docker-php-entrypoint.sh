@@ -56,6 +56,7 @@ if [ "$1" = "php-fpm" ] || [ "$1" = "php-fpm-debug" ]; then
 fi
 
 
+sed -i 's/;pm.max_children = 5/pm.max_children = 100/' /usr/local/etc/php-fpm.d/www.conf
 
 # Start the main container process (e.g., php-fpm or whatever your base image uses)
 exec "$@"
